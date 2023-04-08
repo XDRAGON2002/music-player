@@ -4,7 +4,7 @@ import pickle
 import time
 import os
 from dotenv import load_dotenv
-import tqdm
+from tqdm import tqdm
 
 load_dotenv()
 
@@ -33,7 +33,7 @@ embed_ids = list(embeddings.keys())
 
 refresh_access_token()
 
-for i in tqdm.tqdm(range(0, (len(embed_ids) // 50) + 1)):
+for i in tqdm(range((len(embed_ids) // 50) + 1)):
     search_ids = embed_ids[50 * i: (50 * i) + 50]
     search = ",".join(search_ids)
     r = requests.get(f"https://api.spotify.com/v1/tracks?ids={search}", headers={
