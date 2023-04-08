@@ -46,7 +46,7 @@ for i in tqdm.tqdm(range(0, (len(embed_ids) // 50) + 1)):
         song_obj["likes"] = 0
         song_obj["songname"] = r["tracks"][j]["name"]
         song_obj["image"] = r["tracks"][j]["album"]["images"][1]["url"]
-        song_obj["songartists"] = ",".join(list(map(lambda x: x["name"], r["tracks"][0]["artists"])))
+        song_obj["songartists"] = ",".join(list(map(lambda x: x["name"], r["tracks"][j]["artists"])))
         objs.append(song_obj)
     new_song = db["songs"].insert_many(objs)
     if i % 89 == 0:
