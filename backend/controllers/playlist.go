@@ -22,9 +22,11 @@ import (
 var playlistCollection *mongo.Collection
 
 func init() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal(err)
+	if _, err := os.Stat(".env"); err == nil {
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 	connectionUri := os.Getenv("MONGO_URI")
 	dbName := os.Getenv("DB_NAME")

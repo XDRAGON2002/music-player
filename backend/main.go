@@ -15,6 +15,6 @@ func main() {
 	routers.RegisterSongRoutes(router)
 	routers.RegisterUserRoutes(router)
 	routers.RegisterPlaylistRoutes(router)
-	fmt.Println("Listening on port 3000...")
-	log.Fatal(http.ListenAndServe(":3000", router))
+	fmt.Println("Listening on port 5000...")
+	log.Fatal(http.ListenAndServe(":5000", router))
 }

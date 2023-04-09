@@ -26,9 +26,11 @@ import (
 var userCollection *mongo.Collection
 
 func init() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal(err)
+	if _, err := os.Stat(".env"); err == nil {
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 	connectionUri := os.Getenv("MONGO_URI")
 	dbName := os.Getenv("DB_NAME")
@@ -80,24 +82,13 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	var foundUser models.User
 	_ = json.NewDecoder(r.Body).Decode(&user)
+	passwordString := user.Password
 	filter := bson.M{"email": user.Email}
 	err := userCollection.FindOne(context.Background(), filter).Decode(&foundUser)
 	if err == nil {
 		json.NewEncoder(w).Encode("User already exists")
 		return
 	}
-	values := map[string]string{"name": "Liked Songs"}
-	data, err := json.Marshal(values)
-	if err != nil {
-		log.Fatal(err)
-	}
-	resp, err := http.Post("http://localhost:3000/api/playlist/add/", "application/json", bytes.NewBuffer(data))
-	if err != nil {
-		log.Fatal(err)
-	}
-	var res map[string]string
-	json.NewDecoder(resp.Body).Decode(&res)
-	user.Playlists = []string{res["InsertedID"]}
 	password := []byte(user.Password)
 	hash, err := bcrypt.GenerateFromPassword(password, bcrypt.MinCost)
 	if err != nil {
@@ -105,6 +96,45 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 	}
 	user.Password = string(hash)
 	inserted, err := userCollection.InsertOne(context.Background(), user)
+	if err != nil {
+		log.Fatal(err)
+	}
+	values := map[string]string{"email": user.Email, "password": passwordString}
+	data, err := json.Marshal(values)
+	if err != nil {
+		log.Fatal(err)
+	}
+	req, err := http.NewRequest("POST", "http://localhost:5000/api/user/login/", bytes.NewBuffer(data))
+	if err != nil {
+		log.Fatal(err)
+	}
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var res string
+	json.NewDecoder(resp.Body).Decode(&res)
+	values = map[string]string{"name": "Liked Songs"}
+	data, err = json.Marshal(values)
+	if err != nil {
+		log.Fatal(err)
+	}
+	req, err = http.NewRequest("POST", "http://localhost:5000/api/playlist/add/", bytes.NewBuffer(data))
+	if err != nil {
+		log.Fatal(err)
+	}
+	res = fmt.Sprintf("Bearer %s", res)
+	req.Header.Set("Authorization", res)
+	resp, err = http.DefaultClient.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var playlistRes map[string]string
+	json.NewDecoder(resp.Body).Decode(&playlistRes)
+	user.Playlists = []string{playlistRes["InsertedID"]}
+	filter = bson.M{"email": user.Email}
+	update := bson.M{"$set": bson.M{"playlists": user.Playlists}}
+	_, err = userCollection.UpdateOne(context.Background(), filter, update)
 	if err != nil {
 		log.Fatal(err)
 	}
