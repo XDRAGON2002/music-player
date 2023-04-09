@@ -61,7 +61,6 @@ func GetSongs(w http.ResponseWriter, r *http.Request) {
 		}
 		songs = append(songs, song)
 	}
-	defer cur.Close(context.Background())
 	json.NewEncoder(w).Encode(songs)
 }
 
@@ -87,10 +86,11 @@ func AddSong(w http.ResponseWriter, r *http.Request) {
 	var foundSong models.Song
 	_ = json.NewDecoder(r.Body).Decode(&song)
 	song.Likes = 0
-	filter := bson.M{"songId": song.SongID}
+	filter := bson.M{"songid": song.SongID}
 	err := songCollection.FindOne(context.Background(), filter).Decode(&foundSong)
 	if err == nil {
 		json.NewEncoder(w).Encode("Song already exists")
+		return
 	}
 	inserted, err := songCollection.InsertOne(context.Background(), song)
 	if err != nil {
@@ -110,4 +110,24 @@ func LikeSong(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	json.NewEncoder(w).Encode(inserted)
+}
+
+func SearchSong(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	searchString := params["search"]
+	filter := bson.M{"songname": bson.M{"$regex": primitive.Regex{Pattern: searchString, Options: "i"}}}
+	cur, err := songCollection.Find(context.Background(), filter)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var songs []primitive.M
+	for cur.Next(context.Background()) {
+		var song bson.M
+		err := cur.Decode(&song)
+		if err != nil {
+			log.Fatal(err)
+		}
+		songs = append(songs, song)
+	}
+	json.NewEncoder(w).Encode(songs)
 }
