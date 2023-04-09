@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -40,8 +41,14 @@ func init() {
 	fmt.Println("Song collection ready")
 }
 
-func GetAllSongs(w http.ResponseWriter, r *http.Request) {
-	cur, err := songCollection.Find(context.Background(), bson.D{{}})
+func GetSongs(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	page, err := strconv.Atoi(params["page"])
+	page64 := int64(page)
+	options := &options.FindOptions{}
+	options.SetSkip((page64 - 1) * 25)
+	options.SetLimit(25)
+	cur, err := songCollection.Find(context.Background(), bson.D{{}}, options)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -74,6 +81,7 @@ func GetSong(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(song)
 }
 
+// TODO: Fix add song to model
 func AddSong(w http.ResponseWriter, r *http.Request) {
 	var song models.Song
 	var foundSong models.Song
@@ -91,6 +99,7 @@ func AddSong(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(inserted)
 }
 
+// TODO: Fix like/dislike logic
 func LikeSong(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, _ := primitive.ObjectIDFromHex(params["id"])

@@ -44,7 +44,7 @@ func init() {
 	fmt.Println("User collection ready")
 }
 
-func GetAllUsers(w http.ResponseWriter, r *http.Request) {
+func GetUsers(w http.ResponseWriter, r *http.Request) {
 	cur, err := userCollection.Find(context.Background(), bson.D{{}})
 	if err != nil {
 		log.Fatal(err)

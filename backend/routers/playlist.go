@@ -10,7 +10,7 @@ import (
 )
 
 func RegisterPlaylistRoutes(router *mux.Router) {
-	router.Handle("/api/playlist/", middlewares.AuthMiddleware(http.HandlerFunc(controllers.GetAllPlaylists))).Methods("GET")
+	router.Handle("/api/playlist/", middlewares.AuthMiddleware(http.HandlerFunc(controllers.GetPlaylists))).Methods("GET")
 	router.Handle("/api/playlist/{id}", middlewares.AuthMiddleware(http.HandlerFunc(controllers.GetPlaylist))).Methods("GET")
 	router.Handle("/api/playlist/add/", middlewares.AuthMiddleware(http.HandlerFunc(controllers.AddPlaylist))).Methods("POST")
 	router.Handle("/api/playlist/{userid}/{playlistid}", middlewares.AuthMiddleware(http.HandlerFunc(controllers.DeletePlaylist))).Methods("DELETE")

@@ -40,7 +40,7 @@ func init() {
 	fmt.Println("Playlist collection ready")
 }
 
-func GetAllPlaylists(w http.ResponseWriter, r *http.Request) {
+func GetPlaylists(w http.ResponseWriter, r *http.Request) {
 	cur, err := playlistCollection.Find(context.Background(), bson.D{{}})
 	if err != nil {
 		log.Fatal(err)
