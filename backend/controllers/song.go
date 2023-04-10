@@ -39,6 +39,10 @@ func init() {
 }
 
 func GetAllSongs(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	
 	cur, err := songCollection.Find(context.Background(), bson.D{{}})
 	if err != nil {
 		log.Fatal(err)
