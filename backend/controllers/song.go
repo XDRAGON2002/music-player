@@ -41,7 +41,10 @@ func init() {
 	fmt.Println("Song collection ready")
 }
 
+
 func GetSongs(w http.ResponseWriter, r *http.Request) {
+  w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	params := mux.Vars(r)
 	page, err := strconv.Atoi(params["page"])
 	page64 := int64(page)
