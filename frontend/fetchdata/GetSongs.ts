@@ -15,7 +15,7 @@ export const Songs = async () => {
     // return SongData
 
     try{
-        const response = await axios.get('http://localhost:5000/api/song/')
+        const response = await axios.get('http://localhost:5000/api/song/page/1')
         return {success: true, data: response.data}
     }catch(err:any){
         console.log("Error in fetching songs: ", err.message)

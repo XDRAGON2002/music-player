@@ -1,7 +1,9 @@
 export interface ISong {
     id: string;
-    songName: string;
+    songname: string;
     image: string;
+    songartists: string;
+    likes: number;
 }
 
 
