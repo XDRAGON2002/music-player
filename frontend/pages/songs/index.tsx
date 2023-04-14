@@ -23,18 +23,22 @@ const home = () => {
   return (
     <>
     <Header/>
-    <main className='max-w-7xl mx-auto px-8 '>
+    <main className=' max-w-7xl mx-auto px-8 '>
         <section className='pt-6'>
           <h2 className='text-4xl font-semibold pb-5'>Explore Songs</h2>
+          <hr/>
+          <br/>
 
           {/* pulling data from a file */}
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+        <div className=' gap-[2.75rem] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 '>
           {songs?.length > 0 && songs.map((item)=>(
            <SmallCard 
             id={item.id}
             image={item.image} 
-            songName={item.songName} 
+            songname={item.songname}
+            songartists={item.songartists} 
+            likes = {item.likes}
             />
           ))}
         </div>
@@ -46,6 +50,8 @@ const home = () => {
          
         </section>
         </main>
+
+        <br/>
 
     </>
   )
