@@ -37,10 +37,11 @@ const home = ({
   return (
     <>
       <Header />
-      <main className=" max-w-7xl mx-auto px-8 ">
+      <main className=" max-w-7xl mx-auto px-10 pt-4 ">
         <section className="pt-6">
-          <h2 className="text-4xl font-semibold pb-5">Explore Songs</h2>
+          <h2 className="text-4xl font-semibold pb-8">Explore Songs</h2>
           <hr />
+          <br />
           <br />
 
           {/* pulling data from a file */}
@@ -57,7 +58,7 @@ const home = ({
                 </p>
               }
             >
-              <div className=" gap-[2.75rem] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 ">
+              <div className="pt-4 px-4  gap-[2.75rem] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 ">
               {songs?.length > 0 &&
                 songs.map((item) => (
                   <Link target="_blank" href={`/songs/${item._id}`}>

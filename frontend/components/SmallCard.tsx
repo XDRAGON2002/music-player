@@ -14,7 +14,7 @@ const SmallCard = (songData: ISong) => {
     //   </div>
     // </div>
 
-    <div className="dark:bg-gray-900 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-lg md:flex-row md:max-w-xl hover:bg-gray-100 hover:scale-105 transition transform duration-200 ease-out dark:border-0 ">
+    <div className="dark:bg-gray-900 dark:hover:bg-slate-800 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-lg md:flex-row md:max-w-xl hover:bg-gray-100 hover:scale-105 transition transform duration-200 ease-out dark:border-0 ">
       <img
         className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
         src={songData.image}
