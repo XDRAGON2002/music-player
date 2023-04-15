@@ -102,10 +102,4 @@ export async function getServerSideProps() {
 }
 
 
-const ScrollToTopContainerVariants: Variants = {
-  hide: { opacity: 0, y: 100 },
-  show: { opacity: 1, y: 0 },
-};
-
-
 export default home;
