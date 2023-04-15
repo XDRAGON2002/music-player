@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Header from '@/components/Header'
 import Banner from '@/components/Banner'
-const Home = () => {
+const Ved = () => {
   return (
    <> 
    <Head>
@@ -17,4 +17,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Ved

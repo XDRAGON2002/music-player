@@ -20,18 +20,18 @@ const SmallCard = (songData: ISong) => {
         src={songData.image}
         alt=""
       />
-      <div className="flex flex-col justify-between p-4 leading-normal">
+      <div className="flex flex-col justify-between p-4 leading-normal jsu">
         <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
           {songData.songname}
         </h5>
         <p className="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">
           {songData.songartists}
         </p>
-        <div className="flex">
+        <div className="flex mt-1">
           <div>
             <HeartIcon className="text-right  mt-[4.5] h-6 pr-3 pb-3" />
           </div>
-          <p className="  mt-3 text-xs font-normal text-gray-700 dark:text-gray-400">
+          <p className=" text-xs font-normal text-gray-700 dark:text-gray-400">
             {songData.likes}
           </p>
         </div>
