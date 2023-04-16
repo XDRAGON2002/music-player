@@ -60,6 +60,7 @@ func GetSongs(w http.ResponseWriter, r *http.Request) {
 		var song bson.M
 		err := cur.Decode(&song)
 		if err != nil {
+			json.NewEncoder(w).Encode("database exhausted")
 			log.Fatal(err)
 		}
 		songs = append(songs, song)
