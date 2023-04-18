@@ -88,7 +88,6 @@ const Header = () => {
             className="text-black font-medium   text-[0.55rem]  text-center inline-flex items-center  dark:text-white "
             type="button"
           >
-            
             <svg
               fill="none"
               stroke="currentColor"

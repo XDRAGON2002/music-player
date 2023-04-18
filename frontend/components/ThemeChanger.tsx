@@ -1,11 +1,10 @@
-import { MoonIcon, SunIcon } from '@heroicons/react/solid';
-import { useTheme } from 'next-themes';
-import React, { useEffect, useState } from 'react'
+import { MoonIcon, SunIcon } from "@heroicons/react/solid";
+import { useTheme } from "next-themes";
+import React, { useEffect, useState } from "react";
 
 const ThemeChanger = () => {
-
-    const [mounted, setMounted] = useState(false);
-    const { systemTheme, theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const { systemTheme, theme, setTheme } = useTheme();
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -34,13 +33,7 @@ const ThemeChanger = () => {
     }
   };
 
+  return <div className="absolute end-2 top-3">{renderThemeChanger()}</div>;
+};
 
-  return (
-
-    <div className="absolute end-2 top-3">
-    {renderThemeChanger()}
-    </div>
-  )
-}
-
-export default ThemeChanger
+export default ThemeChanger;

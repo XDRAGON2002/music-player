@@ -7,7 +7,6 @@ import Header from "@/components/Header";
 import { useTheme } from "next-themes";
 import ThemeChanger from "@/components/ThemeChanger";
 
-
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +19,7 @@ const SignIn = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ThemeChanger/>
+      <ThemeChanger />
       <main className="flex  items-center justify-center w-full flex-1 px-20 text-center">
         <div className="bg-white dark:bg-gray-900  rounded-2xl  shadow-2xl flex w-2/3 max-w-4xl">
           <div className="w-full p-5 absolute">
