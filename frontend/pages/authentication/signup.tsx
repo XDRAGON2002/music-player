@@ -4,7 +4,11 @@ import { LockClosedIcon } from "@heroicons/react/solid";
 import router from "next/router";
 import Header from "@/components/Header";
 import ThemeChanger from "@/components/ThemeChanger";
+import { useState } from "react";
 const SignIn = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmpassword, setConfirmPassword] = useState("");
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100 dark:bg-gray-800">
       <Head>
@@ -17,45 +21,52 @@ const SignIn = () => {
       <main className="flex  items-center justify-center w-full flex-1 px-20 text-center">
         <div className="bg-white dark:bg-gray-900  rounded-2xl  shadow-2xl flex w-2/3 max-w-4xl">
           <div className="w-full p-5 absolute">
-            <div className="text-left font-bold font-righteous"> Audiofi </div>
+          <div className="text-left  text-xs sm:text-xl font-bold font-righteous"> Audiofi </div>
           </div>
           <div className="py-10 w-full h-full flex flex-col">
-            <div className="font-semibold text-2xl m-auto">
-              SignIn To Your Account
+          <div className="font-semibold  text-xs sm:text-xl m-auto">
+              Create a Account
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-gray-100 dark:bg-gray-800 w-60 p-1 rounded-lg  mt-6 flex items-center">
-                <MailIcon className="w-5 h-5 pl-1" />
+            <div className="  text-xs sm:text-[15px] bg-gray-100 dark:bg-gray-800 w-25 sm:w-60  p-1 rounded-lg   mt-6 flex items-center">
+                <MailIcon className="w-5 h-5 sm:w-7 sm:h-7 pl-1" />
                 <input
                   placeholder="enter mail id"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   type="mail"
-                  className="pl-1 mb-1 dark:bg-gray-800 bg-gray-100 outline-none"
+                  className=" pl-1 mb-1 w-20  sm:w-60 dark:bg-gray-800 bg-gray-100 outline-none"
                 />
               </div>
 
-              <div className="bg-gray-100 dark:bg-gray-800 w-60 p-1 rounded-lg  mt-2 flex items-center">
-                <LockClosedIcon className="w-5 h-5 pl-1" />
+              <div className="text-xs sm:text-[15px] bg-gray-100 dark:bg-gray-800 w-25 sm:w-60 p-1 rounded-lg  mt-2 flex items-center">
+                <LockClosedIcon className="w-5 h-5 sm:w-7 sm:h-7 pl-1 text" />
                 <input
                   placeholder="enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   type="password"
-                  className=" pl-1 mb-1 dark:bg-gray-800 bg-gray-100 outline-none"
+                  className=" pl-1 mb-1 w-20  sm:w-60 dark:bg-gray-800 bg-gray-100 outline-none"
                 />
               </div>
 
-              <div className="bg-gray-100 dark:bg-gray-800 w-60 p-1 rounded-lg  mt-2 flex items-center">
-                <LockClosedIcon className="w-5 h-5 pl-1" />
+              <div className="text-xs sm:text-[15px] bg-gray-100 dark:bg-gray-800 w-25 sm:w-60 p-1 rounded-lg  mt-2 flex items-center">
+                <LockClosedIcon className="w-5 h-5 sm:w-7 sm:h-7 pl-1 text" />
                 <input
-                  placeholder="reenter password"
+                  placeholder="re-enter password"
+                  value={confirmpassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   type="password"
-                  className=" pl-1 mb-1 dark:bg-gray-800 bg-gray-100 outline-none"
+                  className=" pl-1 mb-1 w-20  sm:w-60 dark:bg-gray-800 bg-gray-100 outline-none"
                 />
               </div>
+
 
               <button
                 onClick={() => {
                   router.push("/");
                 }}
-                className=" font-bold dark:bg-gray-800 bg-white px-8 py-4 my-3 rounded-full shadow-md hover:shadow-2xl active:scale-90 transition duration-150"
+                className=" w-10 h-10 sm:w-20 sm:h-15 text-xs flex justify-center items-center  font-bold dark:bg-gray-800 bg-white px-8  py-2 my-3 rounded-full shadow-md hover:shadow-2xl active:scale-90 transition duration-150"
               >
                 SignUp
               </button>
