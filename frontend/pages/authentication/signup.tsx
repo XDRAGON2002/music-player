@@ -2,6 +2,8 @@ import Head from "next/head";
 import { MailIcon } from "@heroicons/react/solid";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import router from "next/router";
+import Header from "@/components/Header";
+import ThemeChanger from "@/components/ThemeChanger";
 const SignIn = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100 dark:bg-gray-800">
@@ -11,6 +13,7 @@ const SignIn = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ThemeChanger/>
       <main className="flex  items-center justify-center w-full flex-1 px-20 text-center">
         <div className="bg-white dark:bg-gray-900  rounded-2xl  shadow-2xl flex w-2/3 max-w-4xl">
           <div className="w-full p-5 absolute">

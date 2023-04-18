@@ -51,7 +51,7 @@ const Header = () => {
   };
 
   return (
-    <header className="dark:bg-gray-900 drop-shadow-sm sticky top-0 z-50 bg-white shadow-md grid grid-cols-3 py-3 px-2 md:px-2">
+    <header className="dark:bg-gray-900 w-full drop-shadow-sm sticky top-0 z-50 bg-white shadow-md grid grid-cols-3 py-3 px-2 md:px-2">
       {/* left */}
       <div
         onClick={() => {

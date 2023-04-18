@@ -1,8 +1,17 @@
 import Head from "next/head";
-import { MailIcon } from "@heroicons/react/solid";
+import { MailIcon, MoonIcon, SunIcon } from "@heroicons/react/solid";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import router from "next/router";
+import { useEffect, useState } from "react";
+import Header from "@/components/Header";
+import { useTheme } from "next-themes";
+import ThemeChanger from "@/components/ThemeChanger";
+
+
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100 dark:bg-gray-800">
       <Head>
@@ -11,6 +20,7 @@ const SignIn = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ThemeChanger/>
       <main className="flex  items-center justify-center w-full flex-1 px-20 text-center">
         <div className="bg-white dark:bg-gray-900  rounded-2xl  shadow-2xl flex w-2/3 max-w-4xl">
           <div className="w-full p-5 absolute">
@@ -23,16 +33,34 @@ const SignIn = () => {
             <div className="flex flex-col items-center">
               <div className="bg-gray-100 dark:bg-gray-800 w-60 p-1 rounded-lg  mt-6 flex items-center">
                 <MailIcon className="w-5 h-5 pl-1" />
-                <input placeholder="enter mail id" type="mail" className="pl-1 mb-1 dark:bg-gray-800 bg-gray-100 outline-none"/>
+                <input
+                  placeholder="enter mail id"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="mail"
+                  className="pl-1 mb-1 dark:bg-gray-800 bg-gray-100 outline-none"
+                />
               </div>
 
               <div className="bg-gray-100 dark:bg-gray-800 w-60 p-1 rounded-lg  mt-2 flex items-center">
                 <LockClosedIcon className="w-5 h-5 pl-1" />
-                <input placeholder="enter password" type="password" className=" pl-1 mb-1 dark:bg-gray-800 bg-gray-100 outline-none"/>
+                <input
+                  placeholder="enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  className=" pl-1 mb-1 dark:bg-gray-800 bg-gray-100 outline-none"
+                />
               </div>
 
-
-              <button onClick={()=>{router.push("/")}} className=' font-bold dark:bg-gray-800 bg-white px-8 py-4 my-3 rounded-full shadow-md hover:shadow-2xl active:scale-90 transition duration-150'>SignIn</button>
+              <button
+                onClick={() => {
+                  router.push("/");
+                }}
+                className=" font-bold dark:bg-gray-800 bg-white px-8 py-4 my-3 rounded-full shadow-md hover:shadow-2xl active:scale-90 transition duration-150"
+              >
+                SignIn
+              </button>
             </div>
           </div>
         </div>
