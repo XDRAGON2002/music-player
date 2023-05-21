@@ -1,14 +1,57 @@
 import Head from "next/head";
 import { MailIcon } from "@heroicons/react/solid";
 import { LockClosedIcon } from "@heroicons/react/solid";
+import {InformationCircleIcon} from "@heroicons/react/solid"
 import router from "next/router";
-import Header from "@/components/Header";
 import ThemeChanger from "@/components/ThemeChanger";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
 const SignIn = () => {
+
+    const userRef:any = useRef();
+    const errRef:any = useRef();
+
+
     const [email, setEmail] = useState("");
+    const [validemail, setValidEmail] = useState(false);
+    const [emailfocus, setEmailFocus] = useState(false);
+
     const [password, setPassword] = useState("");
+    const [validpassword, setValidPassword] = useState(false);
+    const [pwdfocus, setPwdFocus] = useState(false);
+
     const [confirmpassword, setConfirmPassword] = useState("");
+    const [validconfirmpassword, setValidConfirmPassword] = useState(false);
+    const [matchfocus, setMatchFocus] = useState(false);
+
+    const[errmsg, setErrMsg] = useState("");
+    const [success, setSuccess] = useState(false);
+
+    useEffect(()=>{
+        const result = EMAIL_REGEX.test(email)
+        console.log(result)
+        setValidEmail(result);
+    }, [email])
+
+    useEffect(()=>{
+        const result = (() => {
+            if(password.length > 6)
+            return true;
+            return false;
+        })()
+        console.log(result);
+        setValidPassword(result);
+        const match = password === confirmpassword;
+        setValidConfirmPassword(match); 
+    }, [password, confirmpassword])
+
+    useEffect(()=>{
+        setErrMsg('')
+    }, [email, password, confirmpassword])
+
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100 dark:bg-gray-800">
       <Head>
@@ -18,6 +61,7 @@ const SignIn = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThemeChanger />
+      <p ref={errRef} className={errmsg ? "errmsg" : "offscreen"} aria-live="assertive">{errmsg}</p>
       <main className="flex  items-center justify-center w-full flex-1 px-20 text-center">
         <div className="bg-white dark:bg-gray-900  rounded-2xl  shadow-2xl flex w-2/3 max-w-4xl">
           <div className="w-full p-5 absolute">
@@ -33,33 +77,66 @@ const SignIn = () => {
                 <input
                   placeholder="enter mail id"
                   value={email}
+                  ref={userRef}
+
+                  id="mail"
+                  required
+                  aria-invalid={validemail ? "false" : "true"}
+                  aria-describedby="uidnote"
                   onChange={(e) => setEmail(e.target.value)}
+                  onFocus={() => setEmailFocus(true)}
+                  onBlur={() => setEmailFocus(false)}
                   type="mail"
-                  className=" pl-1 mb-1 w-20  sm:w-60 dark:bg-gray-800 bg-gray-100 outline-none"
+                  className=" pl-1 mb-1 w-20 h-8 sm:w-60 dark:bg-gray-800 bg-gray-100 outline-none"
                 />
               </div>
+
+              <p id="uidnote" className={emailfocus && !validemail ? "instructions flex items-center " : "hidden"}>
+                            <InformationCircleIcon className="h-5 w-5 pr-1"/>
+                            please enter a valid email.<br />
+                        </p>
 
               <div className="text-xs sm:text-[15px] bg-gray-100 dark:bg-gray-800 w-25 sm:w-60 p-1 rounded-lg  mt-2 flex items-center">
                 <LockClosedIcon className="w-5 h-5 sm:w-7 sm:h-7 pl-1 text" />
                 <input
                   placeholder="enter password"
                   value={password}
+                  required
+                  aria-invalid={validpassword ? "false" : "true"}
+                  aria-describedby="uidnote"
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"
+                  onFocus={()=>setPwdFocus(true)}
+                  onBlur={()=>setPwdFocus(false)}
                   className=" pl-1 mb-1 w-20  sm:w-60 dark:bg-gray-800 bg-gray-100 outline-none"
                 />
               </div>
+
+              <p id="uidnote" className={pwdfocus && !validpassword ? "instructions flex items-center " : "hidden"}>
+                            <InformationCircleIcon className="h-5 w-5 pr-1"/>
+                            password must be atleast 6 characters long.<br />
+                        </p>
 
               <div className="text-xs sm:text-[15px] bg-gray-100 dark:bg-gray-800 w-25 sm:w-60 p-1 rounded-lg  mt-2 flex items-center">
                 <LockClosedIcon className="w-5 h-5 sm:w-7 sm:h-7 pl-1 text" />
                 <input
                   placeholder="re-enter password"
                   value={confirmpassword}
+                  required
+                  aria-invalid={validconfirmpassword ? "false" : "true"}
+                  aria-describedby="uidnote"
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  onFocus={()=>setMatchFocus(true)}
+                  onBlur={()=>setMatchFocus(false)}
                   type="password"
                   className=" pl-1 mb-1 w-20  sm:w-60 dark:bg-gray-800 bg-gray-100 outline-none"
                 />
               </div>
+
+              <p id="uidnote" className={matchfocus && !validconfirmpassword ? "instructions flex items-center " : "hidden"}>
+                            <InformationCircleIcon className="h-5 w-5 pr-1"/>
+                            password doesn't match.<br />
+                        </p>
 
 
               <button

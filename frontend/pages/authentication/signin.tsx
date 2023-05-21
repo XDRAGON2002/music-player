@@ -9,7 +9,11 @@ import ThemeChanger from "@/components/ThemeChanger";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
+  const [validemail, setValidEmail] = useState(false);
+
+
   const [password, setPassword] = useState("");
+  const [validpassword, setValidPassword] = useState(false);
   return (
     <div className="flex min-h-screen w-full bg-gray-100 dark:bg-gray-800">
       <Head>
@@ -59,6 +63,10 @@ const SignIn = () => {
               >
                 SignIn
               </button>
+
+              <div className="mt-4 text-xs sm:text-[15px]">
+                Don't have a Account? <a className="text-blue-800 font-semibold" href="/authentication/signup">SignUp</a>
+              </div>
             </div>
           </div>
         </div>
