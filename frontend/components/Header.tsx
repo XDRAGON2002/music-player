@@ -19,6 +19,7 @@ const Header = () => {
 
   const router = useRouter();
   const [searchInput, setSearchInput] = useState("");
+  const [toggle, setToggle] = useState(false);
 
   const [mounted, setMounted] = useState(false);
 
@@ -51,7 +52,7 @@ const Header = () => {
   };
 
   return (
-    <header className="dark:bg-gray-900 drop-shadow-sm sticky top-0 z-50 bg-white shadow-md grid grid-cols-3 py-3 px-2 md:px-2">
+    <header className="dark:bg-gray-900 w-full drop-shadow-sm sticky top-0 z-50 bg-white shadow-md grid grid-cols-3 py-3 px-2 md:px-2">
       {/* left */}
       <div
         onClick={() => {
@@ -81,73 +82,71 @@ const Header = () => {
       <div className="flex space-x-4 items-center justify-end text-black">
         <div className="flex   font-semibold text-base items-center space-x-2  p-2 rounded-full">
           {/* <UserCircleIcon className='dark:text-white h-6 cursor-pointer data-dropdown-toggle="dropdown"'/> */}
+          <div onMouseLeave={() => setToggle(false)} className="relative">
+            <button
+              className="text-black font-medium   text-[0.55rem]  text-center inline-flex items-center  dark:text-white "
+              type="button"
+              onMouseOver={() => setToggle(true)}
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                width={27}
+                height={27}
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="false"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </button>
 
-          <button
-            id="dropdownDefaultButton"
-            data-dropdown-toggle="dropdown"
-            className="text-black font-medium   text-[0.55rem]  text-center inline-flex items-center  dark:text-white "
-            type="button"
-          >
-            
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              width={27}
-              height={27}
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
+            <div
+              className={`z-10 absolute right-0 w-40 py-2    rounded-lg shadow-xl bg-white divide-y divide-gray-100 dark:bg-gray-700 ${toggle? "" : "hidden"}`}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-          </button>
-          {/* <!-- Dropdown menu --> */}
-          <div
-            id="dropdown"
-            className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-          >
-            <ul
-              className="py-2 text-sm text-gray-700 dark:text-gray-200"
-              aria-labelledby="dropdownDefaultButton"
-            >
-              <li>
-                <Link
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Settings
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Earnings
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Sign out
-                </Link>
-              </li>
-            </ul>
+              <ul
+                className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdownDefaultButton"
+              >
+                <li>
+                  <Link
+                    href="/authentication/signin"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Sign In
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Sign Up
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Playlists
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Sign out
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
 
           {renderThemeChanger()}
